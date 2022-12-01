@@ -2,7 +2,7 @@ from prettytable import PrettyTable
 import subprocess
 import sys
 import paramiko
-import exec_command
+from DALAvailability import exec_command
 import logging
 import logging.handlers
 import datetime
