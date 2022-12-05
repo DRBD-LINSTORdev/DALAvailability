@@ -5,15 +5,21 @@ node:
     username:
     password:
     disk_path:
+    nic:
   - name:   #做diskful
     ip:
     bond_ip:
     username:
     password:
-    disk_path:
+    nic:
   - name:   #做diskful
     ip:
     bond_ip: 
     username:
     password:
-    disk_path:
+    nic:
+phynode:
+  - ip:
+    username:
+    password:
+Cycle execution times: 1
