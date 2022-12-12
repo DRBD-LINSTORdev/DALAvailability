@@ -1,0 +1,42 @@
+test_mode: quorum                    #- 测试场景标识为quorum
+use_case: 2                   #- 测试用例
+test_times: 1                 #- 测试用例中每种模式执行的次数
+resource_size: 5G                #- 创建的DRBD资源的大小
+log_path: /root/                     #- dmesg日志存放的目录
+versaplx:                            #- VersaPLX节点信息列表
+  - hostname: test-n0             #- 提供节点名称
+    public_ip: 10.203.1.169          #- IP地址，管理节点根据此IP进行主机连接
+    password: password             #- root用户登录密码，用来进行主机连接
+    port: 22                     #- 连接端口，默认使用22端口号
+    private_ip:                      #- DRBD资源网络相关信息
+      device: ens192               #- 网卡设备名称，该网卡为DRBD数据复制网络所在的网卡
+      ip: 10.203.2.169               #- DRBD数据复制网络
+    lvm_device: vgtest            #- 创建存储池资源所用到VG设备名，如有sp配置项则不进行创建存储池操作
+    sp: sptest           #- 测试使用到的资源池名字，该配置可以去除，去除则默认使用VG创建存储池资源
+  - hostname: test-n1             #- 提供节点名称
+    public_ip: 10.203.1.238          #- IP地址，管理节点根据此IP进行主机连接
+    password: password             #- root用户登录密码，用来进行主机连接
+    port: 22                     #- 连接端口，默认使用22端口号
+    private_ip:                      #- DRBD资源网络相关信息
+      device: ens192               #- 网卡设备名称，该网卡为DRBD数据复制网络所在的网卡
+      ip: 10.203.2.238               #- DRBD数据复制网络
+    lvm_device: vgtest            #- 创建存储池资源所用到VG设备名，如有sp配置项则不进行创建存储池操作
+    sp: sptest           #- 测试使用到的资源池名字，该配置可以去除，去除则默认使用VG创建存储池资源
+  - hostname: test-n2             #- 提供节点名称
+    public_ip: 10.203.1.111          #- IP地址，管理节点根据此IP进行主机连接
+    password: password             #- root用户登录密码，用来进行主机连接
+    port: 22                     #- 连接端口，默认使用22端口号
+    private_ip:                      #- DRBD资源网络相关信息
+      device: ens192               #- 网卡设备名称，该网卡为DRBD数据复制网络所在的网卡
+      ip: 10.203.2.111               #- DRBD数据复制网络
+    lvm_device: vgtest            #- 创建存储池资源所用到VG设备名，如有sp配置项则不进行创建存储池操作
+    sp: sptest           #- 测试使用到的资源池名字，该配置可以去除，去除则默认使用VG创建存储池资源
+email:                               #- 邮件发送信息列表
+  enable: no                #- 选择是否发送邮件，yes表示发送，no表示不发送
+  host: <server>                     #- 邮件发送服务器，根据自己的邮件类型选择不同的发送服务器
+  encrypt: <encryption mode>         #- 加密类型，可选 no_ssl，ssl，tls
+  port: <port>                       #- 邮件发送服务器端口号，no_ssl对应端口号为25，ssl对应端口号为465，tls对应端口号为587
+  sender: <mailbox>                  #- 用来发送邮件的邮箱账户
+  password: <password>               #- 用来发送邮件的邮箱密码
+  receiver_list:                     #- 接收邮件的邮箱列表
+    - <mailbox>                      #- 接收邮件的邮箱
