@@ -1,22 +1,45 @@
+resource_definition: 
+controller_ip: 
+thick_lvm_storagepool_name : 
+thin_lvm_storagepool_name : 
 node:
-  - name:   #做diskless
-    ip:
-    bond_ip:
-    username:
-    password:
-    disk_path:
-    network_card: ens192
-  - name:   #做diskful
-    ip:
-    bond_ip:
-    username:
-    password:
-    disk_path:
-    network_card: ens192
-  - name:   #做diskful
-    ip:
-    bond_ip: 
-    username:
-    password:
-    disk_path:
-    network_card: ens192
+  - name: 
+    ip: 
+    drbd_ip: 
+    username: 
+    password: 
+    disk_path: 
+    partition_path: 
+    network_card:
+    vgname: vgtest
+    thinpool_vgname: 
+    bmc:
+      ip:
+      username:
+      password:
+  - name: 
+    ip: 
+    drbd_ip: 
+    username: 
+    password: 
+    disk_path: 
+    network_card:
+    vgname: 
+    thinpool_vgname: 
+    bmc:
+      ip:
+      username:
+      password:
+  - name: 
+    ip: 
+    drbd_ip: 
+    username: 
+    password: 
+    disk_path: 
+    network_card:
+    vgname: 
+    thinpool_vgname: 
+    bmc:
+      ip:
+      username:
+      password:

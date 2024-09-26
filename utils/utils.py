@@ -1,8 +1,5 @@
 from prettytable import PrettyTable
-import subprocess
-import sys
-import paramiko
-import exec_command
+from utils import exec_command
 import logging
 import logging.handlers
 import datetime
@@ -26,15 +23,19 @@ def exec_cmd(cmd, conn=None):
     local_obj = exec_command.LocalProcess()
     if conn:
         result = conn.exec_cmd(cmd)
+        log_data = f'{conn._host} - {cmd} - {result}'
+        result = result.decode() if isinstance(result, bytes) else result
     else:
         result = local_obj.exec_cmd(cmd)
-    result = result.decode() if isinstance(result, bytes) else result
-    log_data = f'{get_host_ip()} - {cmd} - {result}'
+        log_data = f'{get_host_ip()} - {cmd} - {result}'
+        result = result.decode() if isinstance(result, bytes) else result
+    # result = result.decode() if isinstance(result, bytes) else result
+    # log_data = f'{get_host_ip()} - {cmd} - {result}'
     Log().logger.info(log_data)
     if result['st']:
         pass
-        # f_result = result['rt'].rstrip('\n')
     if result['st'] is False:
+        print(result['rt'])
         sys.exit()
     return result['rt']
 
@@ -76,9 +77,9 @@ class Log(object):
     def set_handler(logger):
         now_time = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
         file_name = str(now_time) + '.log'
-        fh = logging.FileHandler(file_name, mode='a')
+        fh = logging.FileHandler(file_name, mode='a', encoding='utf-8')
         fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+        formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s", datefmt='%Y-%m-%d %H:%M:%S')
         fh.setFormatter(formatter)
         logger.addHandler(fh)
 

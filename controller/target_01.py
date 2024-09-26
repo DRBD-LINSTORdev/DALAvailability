@@ -1,11 +1,7 @@
 import re
 import sys
 
-import config_file
-import exec_command
-import utils
-import resources_operator
-import network_operator
+from utils import exec_command, config_file, network_operator, resources_operator
 import time
 
 

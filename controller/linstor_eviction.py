@@ -1,7 +1,4 @@
-import config_file
-import exec_command
-import resources_operator
-import network_operator
+from utils import exec_command, config_file, network_operator, resources_operator
 import time
 import utils
 

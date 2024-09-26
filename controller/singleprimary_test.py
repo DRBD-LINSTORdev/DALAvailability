@@ -1,9 +1,6 @@
-import exec_command
+from utils import exec_command, config_file, resources_operator
 import time
-import utils
-import resources_operator
 import re
-import config_file
 
 
 class SinglePrimary(object):
@@ -15,14 +12,14 @@ class SinglePrimary(object):
         self.yaml_file = config_file.ConfFile('../config.yaml')
         self.yaml_info_list = self.yaml_file.read_yaml()
         self.controller_node = exec_command.SSHconn(host=self.yaml_info_list['node'][0]['ip']
-                                       ,username=self.yaml_info_list['node'][0]['username']
-                                       ,password=self.yaml_info_list['node'][0]['password'])
+                                                    , username=self.yaml_info_list['node'][0]['username']
+                                                    , password=self.yaml_info_list['node'][0]['password'])
         self.satellite_node01 = exec_command.SSHconn(host=self.yaml_info_list['node'][1]['ip']
-                                       ,username=self.yaml_info_list['node'][1]['username']
-                                       ,password=self.yaml_info_list['node'][1]['password'])
+                                                     , username=self.yaml_info_list['node'][1]['username']
+                                                     , password=self.yaml_info_list['node'][1]['password'])
         self.satellite_node02 = exec_command.SSHconn(host=self.yaml_info_list['node'][2]['ip']
-                                       ,username=self.yaml_info_list['node'][2]['username']
-                                       ,password=self.yaml_info_list['node'][2]['password'])
+                                                     , username=self.yaml_info_list['node'][2]['username']
+                                                     , password=self.yaml_info_list['node'][2]['password'])
         self.drbd_cmd = resources_operator.DRBD()
         self.linstor_cmd = resources_operator.Linstor()
 

@@ -1,6 +1,4 @@
-import exec_command
-import config_file
-import resources_operator
+from utils import exec_command, config_file, resources_operator
 import re
 import utils
 

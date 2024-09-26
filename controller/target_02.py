@@ -2,10 +2,7 @@ import sys
 import time
 from threading import Thread
 from .. import utils
-from .. import resources_operator
-from .. import exec_command
-from .. import config_file
-from .. import network_operator
+from utils import exec_command, config_file, network_operator, resources_operator
 import timeout_decorator
 import re
 

@@ -1,9 +1,11 @@
 import paramiko
 import subprocess
+import time
 
 
 class SSHconn(object):
-    def __init__(self, host, port=22, username="root", password=None, timeout=8):
+    def __init__(self, host, name, port=22, username="root", password=None, timeout=8):
+        self._name = name
         self._host = host
         self._port = port
         self._username = username
@@ -11,6 +13,7 @@ class SSHconn(object):
         self.timeout = timeout
         self.sshconnection = None
         self.ssh_conn()
+        self.channel = self.sshconnection.invoke_shell()
 
 
     def ssh_conn(self):
@@ -34,20 +37,24 @@ class SSHconn(object):
             print(f" Failed to connect {self._host}")
 
     def exec_cmd(self, command):
-        """
-        命令执行
-        """
         if self.sshconnection:
             stdin, stdout, stderr = self.sshconnection.exec_command(command)
             result = stdout.read()
+            err = stderr.read()
             result = result.decode() if isinstance(result, bytes) else result
-            if result is not None:
+            err = err.decode() if isinstance(err, bytes) else err
+            if err is not None and err != "":
+                return {"st": False, "rt": err}
+            else:
                 return {"st": True, "rt": result}
 
-            err = stderr.read()
-            if err is not None:
-                return {"st": False, "rt": err}
+    def invoke_send_command(self, command):
+        self.channel.send(f'{command}\n')
 
+    def invoke_receive_output(self, sec):
+        time.sleep(sec)
+        output = self.channel.recv(9999)
+        print(output.decode('utf-8'))
 
     def download(self, local, remote):
         """
@@ -78,7 +85,7 @@ class LocalProcess(object):
         命令执行
         """
         sub_conn = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        if sub_conn.returcode == 0:
+        if sub_conn.returncode == 0:
             result = sub_conn.stdout
             return {"st": True, "rt": result}
         else:

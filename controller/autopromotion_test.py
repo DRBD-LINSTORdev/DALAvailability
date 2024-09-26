@@ -1,6 +1,4 @@
-import config_file
-import resources_operator
-import exec_command
+from utils import exec_command, config_file, resources_operator
 import utils
 import re
 import sys
@@ -50,7 +48,7 @@ class AutomaticPromotion(object):
     def kill_dd(self, obj_ssh):
         try:
             process_info = utils.exec_cmd('ps -A | grep dd', obj_ssh)
-            result01 = re.findall(f'([\d]+) \?        \w\w:\w\w:\w\w dd', process_info)
+            result01 = re.findall(f'(\S+)\s+\S+\s+\S+\s+dd', process_info)
             r_dd_pid = result01[0]
             kill_dd_cmd = self.dd_cmds.kill_dd(r_dd_pid)
             utils.exec_cmd(kill_dd_cmd, obj_ssh)

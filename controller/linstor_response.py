@@ -1,7 +1,7 @@
-import exec_command
+from utils import exec_command, config_file
 import utils
 import re
-import config_file
+
 
 class LinstorCommandResponse(object):
     """
